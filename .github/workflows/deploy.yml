@@ -5,26 +5,44 @@ on:
       - main
 
 jobs:
-  atatus:
+  example:
     runs-on: ubuntu-latest
-    name: Atatus
     steps:
-      # - name: Get Commit Message
-      #   id: commit_message
-      #   run: |
-      #     # Fetch the commit message for the current commit (GITHUB_SHA)
-      #     COMMIT_MSG=$(git log -1 --pretty=%B $GITHUB_SHA)
-      #     echo "Commit message: $COMMIT_MSG"
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      #     echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV
-
-      # This step creates a new Change Tracking Marker
-      - name: Atatus Application Deployment Marker
-        uses: atatus/deployment-marker-action@v1.0.1
+      - name: Use custom GitHub action from another repository
+        uses: sharanraj124/test-deployment-marker-action-ts@v1.0.1
         with:
-          apiKey: ${{ secrets.ATATUS_API_KEY }}
-          projectId: ${{ secrets.ATATUS_PROJECT_ID }}
+          api_url: "https://api.atatus.com/v2/projects"
+          api_key: ${{ secrets.ATATUS_API_KEY }}
+          changes: ${{ env.CHANGED_FILES }}
           revision: ${{ github.run_number }}
-          releaseStage: 'production'
-          changes: ${{ env.COMMIT_MESSAGE }}
-          user: ${{ github.actor }}
+          release_stage: 'production'
+          project_id: ${{ secrets.ATATUS_PROJECT_ID }}
+
+
+# jobs:
+#   atatus:
+#     runs-on: ubuntu-latest
+#     name: Atatus
+#     steps:
+#       # - name: Get Commit Message
+#       #   id: commit_message
+#       #   run: |
+#       #     # Fetch the commit message for the current commit (GITHUB_SHA)
+#       #     COMMIT_MSG=$(git log -1 --pretty=%B $GITHUB_SHA)
+#       #     echo "Commit message: $COMMIT_MSG"
+
+#       #     echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV
+
+#       # This step creates a new Change Tracking Marker
+#       - name: Atatus Application Deployment Marker
+#         uses: atatus/deployment-marker-action@v1.0.1
+#         with:
+#           apiKey: ${{ secrets.ATATUS_API_KEY }}
+#           projectId: ${{ secrets.ATATUS_PROJECT_ID }}
+#           revision: ${{ github.run_number }}
+#           releaseStage: 'production'
+#           changes: ${{ env.COMMIT_MESSAGE }}
+#           user: ${{ github.actor }}
