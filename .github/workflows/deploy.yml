@@ -18,7 +18,8 @@ jobs:
       #     COMMIT_MSG=$(git log -1 --pretty=%B $GITHUB_SHA)
       #     echo "Commit message: $COMMIT_MSG"
 
-      #     echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV
+      #     echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV te
+
 
       # This step creates a new Change Tracking Marker
       - name: Atatus Application Deployment Marker
