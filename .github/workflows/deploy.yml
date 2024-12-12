@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Atatus
     steps:
-      # - name: Get Commit Message
-      #   id: commit_message
-      #   run: |
-      #     # Fetch the commit message for the current commit (GITHUB_SHA)
-      #     COMMIT_MSG=$(git log -1 --pretty=%B $GITHUB_SHA)
-      #     echo "Commit message: $COMMIT_MSG"
+      - name: Get Commit Message
+        id: commit_message
+        run: |
+          # Fetch the commit message for the current commit (GITHUB_SHA)
+          COMMIT_MSG=${{ github.event.workflow_run.head_commit.message }}
+          echo "Commit message: $COMMIT_MSG"
 
-      #     echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$COMMIT_MSG" >> $GITHUB_ENV
 
       # This step creates a new Change Tracking Marker
       - name: Atatus Application Deployment Marker
