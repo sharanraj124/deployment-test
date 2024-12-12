@@ -11,6 +11,16 @@ jobs:
     steps:
       - name: Set Release Version from Tag
         run: echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Get tag version if available
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG_VERSION="${GITHUB_REF##*/}"
+            echo "Tag version: $TAG_VERSION"
+            echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
+          else
+            echo "No tag version for this commit"
+          fi
       # - name: Get Commit Message
       #   id: commit_message
       #   run: ||
@@ -27,7 +37,7 @@ jobs:
         with:
           apiKey: ${{ secrets.ATATUS_API_KEY }}
           projectId: ${{ secrets.ATATUS_PROJECT_ID }}
-          revision: ${{ env.RELEASE_VERSION || github.run_number }}
+          revision: ${{ env.TAG_VERSION || github.run_number }}
           releaseStage: 'staging'
           changes: ${{ github.sha }}
           user: ${{ github.actor }}
