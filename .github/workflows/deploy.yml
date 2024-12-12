@@ -1,8 +1,12 @@
 name: Change Tracking Marker
+# on:
+#   push:
+#     branches:
+#       - main
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
   atatus:
@@ -11,13 +15,6 @@ jobs:
     steps:
       - name: Set Release Version from Tag
         run: echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
-
-      - name: Get the latest tag version
-        run: |
-          git fetch --tags
-          LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo "Latest tag: $LATEST_TAG"
-          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
       # - name: Get Commit Message
       #   id: commit_message
       #   run: ||
@@ -34,7 +31,7 @@ jobs:
         with:
           apiKey: ${{ secrets.ATATUS_API_KEY }}
           projectId: ${{ secrets.ATATUS_PROJECT_ID }}
-          revision: ${{ env.LATEST_TAG || github.run_number }}
+          revision: ${{ env.RELEASE_VERSION || github.run_number }}
           releaseStage: 'staging'
           changes: ${{ github.sha }}
           user: ${{ github.actor }}
