@@ -27,6 +27,6 @@ jobs:
           apiKey: ${{ secrets.ATATUS_API_KEY }}
           projectId: ${{ secrets.ATATUS_PROJECT_ID }}
           revision: ${{ env.RELEASE_VERSION || github.run_number }}
-          releaseStage: 'production'
+          releaseStage: 'staging'
           changes: ${{ github.sha }}
           user: ${{ github.actor }}
