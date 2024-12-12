@@ -13,7 +13,7 @@ jobs:
         run: echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
       # - name: Get Commit Message
       #   id: commit_message
-      #   run: |
+      #   run: ||
       #     # Fetch the commit message for the current commit (GITHUB_SHA)
       #     COMMIT_MSG=$(git log -1 --pretty=%B $GITHUB_SHA)
       #     echo "Commit message: $COMMIT_MSG"
